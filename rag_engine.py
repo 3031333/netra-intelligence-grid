@@ -3,6 +3,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
 from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
+import streamlit as st # Ensure this is imported
 
 # 🔒 Unlock the .env file
 load_dotenv()
@@ -11,16 +12,22 @@ print("🧠 Booting NETRA Neural Engine...")
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Grab the keys from the vault
-QDRANT_URL = os.getenv("QDRANT_URL")
-QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
+def get_qdrant_client():
+    # Attempt to load from Streamlit Secrets (Cloud) first
+    try:
+        url = st.secrets["QDRANT_URL"]
+        key = st.secrets["QDRANT_API_KEY"]
+    except:
+        # Fallback to .env (Local Docker)
+        url = os.getenv("QDRANT_URL")
+        key = os.getenv("QDRANT_API_KEY")
 
-if QDRANT_URL and QDRANT_API_KEY:
-    print(f"🌐 Connecting to Qdrant Managed AWS Cloud Cluster...")
-    qdrant = QdrantClient(url=QDRANT_URL, api_key=QDRANT_API_KEY)
-else:
-    print("⚠️ Cloud keys missing. Falling back to local memory.")
-    qdrant = QdrantClient(":memory:")
+    if url and key:
+        return QdrantClient(url=url, api_key=key)
+    return QdrantClient(":memory:")
 
+# Initialize globally
+qdrant = get_qdrant_client()
 COLLECTION_NAME = "bns_legal_codes"
 
 # ... (Keep the exact same collection_exists logic you already have below this) ...
