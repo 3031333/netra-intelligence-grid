@@ -8,11 +8,7 @@ import streamlit as st
 # 🔒 Unlock the .env file
 load_dotenv()
 # Use Streamlit's secrets management
-try:
-    DATABASE_URL = st.secrets["DATABASE_URL"]
-except KeyError:
-    st.error("DATABASE_URL not found in Streamlit secrets!")
-    st.stop()
+DATABASE_URL = st.secrets["DATABASE_URL"]
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
