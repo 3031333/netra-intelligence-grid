@@ -3,11 +3,16 @@ from sqlalchemy import create_engine, Column, Integer, String, JSON, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 from datetime import datetime
 from dotenv import load_dotenv
+import streamlit as st
 
 # 🔒 Unlock the .env file
 load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Use Streamlit's secrets management
+try:
+    DATABASE_URL = st.secrets["DATABASE_URL"]
+except KeyError:
+    st.error("DATABASE_URL not found in Streamlit secrets!")
+    st.stop()
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
