@@ -9,7 +9,7 @@ import streamlit.components.v1 as components
 # Use Localhost while testing inside Docker.
 # Before deploying to Streamlit Cloud, activate your Render URL!
 # ---------------------------------------------------------------------
-API_BASE_URL = "http://127.0.0.1:8000"
+API_BASE_URL = "https://netra-backend-api.onrender.com"
 # API_BASE_URL = "https://your-render-app-name.onrender.com"
 
 st.set_page_config(page_title="NETRA SaaS | Public Safety Grid", layout="wide")
