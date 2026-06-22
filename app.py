@@ -51,8 +51,13 @@ if not st.session_state.token:
                                 st.success("Handshake accepted. Decrypting dashboard...")
                                 st.rerun()
                             else:
-                                st.error(f"❌ Access Denied: {res.json().get('detail', 'Unauthorized credentials')}")
-
+                            # 🚨 THE FIX: Gracefully handle non-JSON responses from Render
+                                try:
+                                    error_msg = res.json().get('detail', 'Unauthorized credentials')
+                                except:
+                                    error_msg = f"Backend Server Offline or Booting Up (HTTP {res.status_code})"
+                                    
+                                st.error(f"❌ Access Denied: {error_msg}")
         # --- TAB 2: REGISTER ---
         with tab_register:
             with st.form("register_form"):
