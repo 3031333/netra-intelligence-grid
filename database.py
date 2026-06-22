@@ -1,9 +1,13 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, String, JSON, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
+from datetime import datetime
 from dotenv import load_dotenv
 import streamlit as st
 
+# 🔒 Unlock the .env file
+load_dotenv()
+# Use Streamlit's secrets management
 # Load local .env if running on laptop
 load_dotenv()
 
@@ -20,7 +24,6 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
-# ... (Keep the rest of your tables here) ...
 # ... (Keep your InterceptRecord and User tables the same below this) ...
 # ==========================================
 # 🗄️ DATABASE TABLES
