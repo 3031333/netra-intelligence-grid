@@ -1,19 +1,26 @@
 import os
-from sqlalchemy import create_engine, Column, Integer, String, JSON, DateTime
+from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
-from datetime import datetime
 from dotenv import load_dotenv
 import streamlit as st
 
-# 🔒 Unlock the .env file
+# Load local .env if running on laptop
 load_dotenv()
-# Use Streamlit's secrets management
-DATABASE_URL = st.secrets["DATABASE_URL"]
+
+# Get the URL from Streamlit Secrets (Cloud) or Environment Variable (Docker/Render)
+try:
+    DATABASE_URL = st.secrets["DATABASE_URL"]
+except:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise ValueError("CRITICAL: DATABASE_URL is not set in Streamlit Secrets or Environment Variables.")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
+# ... (Keep the rest of your tables here) ...
 # ... (Keep your InterceptRecord and User tables the same below this) ...
 # ==========================================
 # 🗄️ DATABASE TABLES
