@@ -4,6 +4,11 @@ NETRA (Network Extraction & Threat Resolution Architecture) is a platform design
 
 **Live Application:** [https://netra-intelligence-grid-dpnq7jvoikdeu3c79jzrf3.streamlit.app/](https://netra-intelligence-grid-dpnq7jvoikdeu3c79jzrf3.streamlit.app/)
 
+> ### 🔑 INSTANT EVALUATION CREDENTIALS
+> To bypass the IAM registration process and test the live grid immediately, use the following provisioned credentials on the **Officer Login** tab:
+> * **Officer ID:** `User_Git`
+> * **Passcode:** `Git_User`
+
 ## Project Structure
 
 ### Backend
