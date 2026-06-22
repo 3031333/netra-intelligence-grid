@@ -78,8 +78,13 @@ if not st.session_state.token:
                                 st.success(f"✅ Success: {res.json()['message']}")
                                 st.info("Account provisioned! Please switch to the 'Officer Login' tab to authenticate.")
                             else:
-                                st.error(f"❌ Registration Failed: {res.json().get('detail', 'Bad request')}")
-
+                                # 🚨 THE FIX: Graceful fail-safe for the Registration tab
+                                try:
+                                    error_msg = res.json().get('detail', 'Bad request')
+                                except:
+                                    error_msg = f"Backend Server Offline or Not Found (HTTP {res.status_code})"
+                                
+                                st.error(f"❌ Registration Failed: {error_msg}")
 # =====================================================================
 # 🚀 THE SECURE ENTERPRISE DASHBOARD
 # =====================================================================
