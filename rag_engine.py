@@ -34,17 +34,25 @@ def get_embedding(text: str):
     api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
     headers = {"Authorization": f"Bearer {HF_TOKEN}"}
     
-    response = requests.post(
-        api_url, 
-        headers=headers, 
-        json={"inputs": [text], "options": {"wait_for_model": True}}
-    )
-    
-    if response.status_code == 200:
-        return response.json()[0]
-    else:
-        print(f"⚠️ HF API Error: {response.text}")
-        return [0.0] * 384 # Fallback empty vector
+    try:
+        # 🚨 THE FIX: Added a 15s timeout to prevent indefinite hangs
+        response = requests.post(
+            api_url, 
+            headers=headers, 
+            json={"inputs": [text], "options": {"wait_for_model": True}},
+            timeout=15
+        )
+        
+        if response.status_code == 200:
+            return response.json()[0]
+        else:
+            print(f"⚠️ HF API Error: {response.text}")
+            return [0.0] * 384 # Fallback empty vector
+            
+    except requests.exceptions.RequestException as e:
+        # 🚨 THE FIX: Catch DNS failures and network blips gracefully
+        print(f"⚠️ Network/DNS Error contacting Hugging Face: {e}")
+        return [0.0] * 384 # Fallback empty vector so the server survives
 
 # ==========================================
 # 📚 CLOUD DATABASE INITIALIZATION
