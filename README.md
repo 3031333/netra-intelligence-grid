@@ -2,12 +2,6 @@
 
 NETRA (Network Extraction & Threat Resolution Architecture) is a platform designed to track, map, and legally triage cyber-syndicates for law enforcement. It allows officers to intercept telemetry, maintain dynamic threat topologies, and utilize an autonomous Retrieval-Augmented Generation (RAG) shield connected to the Bharatiya Nyaya Sanhita (BNS) penal code.
 
-**Live Application:** [https://netra-intelligence-grid-dpnq7jvoikdeu3c79jzrf3.streamlit.app/](https://netra-intelligence-grid-dpnq7jvoikdeu3c79jzrf3.streamlit.app/)
-
-> ### 🔑 INSTANT EVALUATION CREDENTIALS
-> To bypass the IAM registration process and test the live grid immediately, use the following provisioned credentials on the **Officer Login** tab:
-> * **Officer ID:** `User_Git`
-> * **Passcode:** `Git_User`
 
 ## Project Structure
 
